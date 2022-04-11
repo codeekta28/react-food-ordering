@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./Components/ByMax/Layout/Header/Header";
+import Meal from "./Components/ByMax/Meals/Meal";
+import Cart from "./Components/ByMax/Cart/Cart";
+import { useState } from "react";
+import CartProvider from "./store/CartProvider";
+import CartCheckout from "./Components/ByMax/Cart/CartCheckout";
 
 function App() {
+  // to make modal open and close we need 2 functions and one state
+  const [modalActivity, setModalActivity] = useState(false);
+  function showModalHandle() {
+    setModalActivity(true);
+  }
+  function hideModalHandle() {
+    setModalActivity(false);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartProvider>
+      {modalActivity && <Cart onHideModal={hideModalHandle} />}
+      <Header onShowModal={showModalHandle} />
+      <main>
+        <Meal />
+     
+      </main>
+    </CartProvider>
   );
 }
 
